@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class FunctionHandler {
 
@@ -16,6 +17,8 @@ public class FunctionHandler {
     public void newFile(){
         gui.textArea.setText("");
         gui.window.setTitle("New");
+        filename=null;
+        fileLocation=null;
     }
 
     public void open() {
@@ -40,5 +43,40 @@ public class FunctionHandler {
         }catch(Exception e){
             System.out.println("Something's wrong with the open functionality");
         }
+    }
+
+    public void save(){
+        if(filename==null){
+            saveAs();
+        }else{
+            try{
+                FileWriter fileWriter=new FileWriter(fileLocation+filename);
+                fileWriter.write(gui.textArea.getText());
+                fileWriter.close();
+            }catch (Exception e){
+                System.out.println("Something's wrong with the save functionality");
+            }
+        }
+    }
+
+    public void saveAs(){
+        FileDialog fileDialog=new FileDialog(gui.window,"Save",FileDialog.SAVE);
+        fileDialog.setVisible(true);
+        if(fileDialog.getFile()!=null){
+            filename=fileDialog.getFile();
+            fileLocation=fileDialog.getDirectory();
+            gui.window.setTitle(filename);
+        }
+        try{
+            FileWriter fileWriter=new FileWriter(fileLocation+filename);
+            fileWriter.write(gui.textArea.getText());
+            fileWriter.close();
+        } catch (Exception e) {
+            System.out.println("Something's wrong with the SaveAs functionality");
+        }
+    }
+
+    public void exit(){
+        System.exit(0);
     }
 }
