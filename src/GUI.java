@@ -6,6 +6,9 @@ public class GUI {
     JFrame window;
     JTextArea textArea;
     JScrollPane scrollPane;
+    JMenuBar menuBar;
+    JMenu file,edit,format,color;
+    JMenuItem nnew,open,save,saveAs,exit;
 
 
     public static void main(String[] args){
@@ -15,6 +18,8 @@ public class GUI {
     public GUI(){
         createWindow();
         createTextArea();
+        createMenuBar();
+        createFileMenu();
         window.setVisible(true);
     }
 
@@ -31,6 +36,41 @@ public class GUI {
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         window.add(scrollPane);
+    }
+
+    public void createMenuBar(){
+        menuBar=new JMenuBar();
+        window.setJMenuBar(menuBar);
+
+        file=new JMenu("File");
+        menuBar.add(file);
+
+        edit=new JMenu("Edit");
+        menuBar.add(edit);
+
+        format=new JMenu("Format");
+        menuBar.add(format);
+
+        color=new JMenu("Color");
+        menuBar.add(color);
+    }
+
+    public void createFileMenu(){
+        nnew=new JMenuItem("New");
+        file.add(nnew);
+
+        open=new JMenuItem("Open");
+        file.add(open);
+
+        save=new JMenuItem("Save");
+        file.add(save);
+
+        saveAs=new JMenuItem("SaveAs");
+        file.add(saveAs);
+
+        exit=new JMenuItem("Exit");
+        file.add(exit);
 
     }
+
 }
