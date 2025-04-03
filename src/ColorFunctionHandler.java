@@ -25,7 +25,6 @@ public class ColorFunctionHandler {
                 gui.textArea.setBackground(Color.blue);
                 gui.textArea.setForeground(Color.white);
                 break;
-
         }
     }
 }
