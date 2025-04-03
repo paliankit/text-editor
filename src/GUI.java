@@ -18,6 +18,7 @@ public class GUI implements ActionListener {
     JMenu font,fontSize;
     JMenuItem color1,color2,color3;
     JMenuItem undo, redo;
+
     FileFunctionHandler fileFunctionHandler =new FileFunctionHandler(this);
     FormatFunctionHandler formatFunctionHandler=new FormatFunctionHandler(this);
     ColorFunctionHandler colorFunctionHandler =new ColorFunctionHandler(this);
