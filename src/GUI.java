@@ -13,8 +13,10 @@ public class GUI implements ActionListener {
     JMenuItem nnew,open,save,saveAs,exit;
     JMenuItem wordWrap,fontArial,fontCSMS,fontTNR,fontSize8,fontSize12,fontSize16,fontSize18;
     JMenu font,fontSize;
+    JMenuItem color1,color2,color3;
     FileFunctionHandler fileFunctionHandler =new FileFunctionHandler(this);
     FormatFunctionHandler formatFunctionHandler=new FormatFunctionHandler(this);
+    ColorFunctionHandler colorFunctionHandler =new ColorFunctionHandler(this);
 
 
     public static void main(String[] args){
@@ -27,9 +29,11 @@ public class GUI implements ActionListener {
         createMenuBar();
         createFileMenu();
         createFormatMenu();
+        createColorMenu();
 
         formatFunctionHandler.selectedFont="Arial";
         formatFunctionHandler.createFont(16);
+        colorFunctionHandler.changeColor("White");
 
         window.setVisible(true);
     }
@@ -142,6 +146,24 @@ public class GUI implements ActionListener {
         fontSize.add(fontSize18);
     }
 
+    private void createColorMenu() {
+        color1=new JMenuItem("White");
+        color1.addActionListener(this);
+        color1.setActionCommand("White");
+        color.add(color1);
+
+        color2=new JMenuItem("Black");
+        color2.addActionListener(this);
+        color2.setActionCommand("Black");
+        color.add(color2);
+
+        color3=new JMenuItem("Blue");
+        color3.addActionListener(this);
+        color3.setActionCommand("Blue");
+        color.add(color3);
+
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -160,7 +182,9 @@ public class GUI implements ActionListener {
             case "12": formatFunctionHandler.createFont(12);break;
             case "16": formatFunctionHandler.createFont(16);break;
             case "18": formatFunctionHandler.createFont(18);break;
-
+            case "White": colorFunctionHandler.changeColor(command);break;
+            case "Black": colorFunctionHandler.changeColor(command);break;
+            case "Blue": colorFunctionHandler.changeColor(command);break;
         }
     }
 }
