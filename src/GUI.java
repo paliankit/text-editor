@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,9 +17,13 @@ public class GUI implements ActionListener {
     JMenuItem wordWrap,fontArial,fontCSMS,fontTNR,fontSize8,fontSize12,fontSize16,fontSize18;
     JMenu font,fontSize;
     JMenuItem color1,color2,color3;
+    JMenuItem undo, redo;
     FileFunctionHandler fileFunctionHandler =new FileFunctionHandler(this);
     FormatFunctionHandler formatFunctionHandler=new FormatFunctionHandler(this);
     ColorFunctionHandler colorFunctionHandler =new ColorFunctionHandler(this);
+    EditFunctionHandler editFunctionHandler=new EditFunctionHandler(this);
+    UndoManager undoManager=new UndoManager();
+
 
 
     public static void main(String[] args){
@@ -30,6 +37,7 @@ public class GUI implements ActionListener {
         createFileMenu();
         createFormatMenu();
         createColorMenu();
+        createEditMenu();
 
         formatFunctionHandler.selectedFont="Arial";
         formatFunctionHandler.createFont(16);
@@ -47,6 +55,12 @@ public class GUI implements ActionListener {
     public void createTextArea(){
         textArea=new JTextArea();
         //window.add(textArea);
+        textArea.getDocument().addUndoableEditListener(new UndoableEditListener() {
+            @Override
+            public void undoableEditHappened(UndoableEditEvent e) {
+                undoManager.addEdit(e.getEdit());
+            }
+        });
         scrollPane=new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -164,6 +178,18 @@ public class GUI implements ActionListener {
 
     }
 
+    private void createEditMenu(){
+        undo=new JMenuItem("Undo");
+        undo.addActionListener(this);
+        undo.setActionCommand("Undo");
+        edit.add(undo);
+
+        redo=new JMenuItem("Redo");
+        redo.addActionListener(this);
+        redo.setActionCommand("Redo");
+        edit.add(redo);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -185,6 +211,8 @@ public class GUI implements ActionListener {
             case "White": colorFunctionHandler.changeColor(command);break;
             case "Black": colorFunctionHandler.changeColor(command);break;
             case "Blue": colorFunctionHandler.changeColor(command);break;
+            case "Undo": editFunctionHandler.undo();break;
+            case "Redo": editFunctionHandler.redo();break;
         }
     }
 }
