@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,10 +7,14 @@ public class GUI implements ActionListener {
     JFrame window;
     JTextArea textArea;
     JScrollPane scrollPane;
+    boolean wordWrapp;
     JMenuBar menuBar;
     JMenu file,edit,format,color;
     JMenuItem nnew,open,save,saveAs,exit;
-    FunctionHandler functionHandler=new FunctionHandler(this);
+    JMenuItem wordWrap,fontArial,fontCSMS,fontTNR,fontSize8,fontSize12,fontSize16,fontSize18;
+    JMenu font,fontSize;
+    FileFunctionHandler fileFunctionHandler =new FileFunctionHandler(this);
+    FormatFunctionHandler formatFunctionHandler=new FormatFunctionHandler(this);
 
 
     public static void main(String[] args){
@@ -23,6 +26,11 @@ public class GUI implements ActionListener {
         createTextArea();
         createMenuBar();
         createFileMenu();
+        createFormatMenu();
+
+        formatFunctionHandler.selectedFont="Arial";
+        formatFunctionHandler.createFont(16);
+
         window.setVisible(true);
     }
 
@@ -86,16 +94,72 @@ public class GUI implements ActionListener {
 
     }
 
+    public void createFormatMenu(){
+        wordWrap=new JMenuItem("Word Wrap");
+        wordWrap.addActionListener(this);
+        wordWrap.setActionCommand("Word Wrap");
+        format.add(wordWrap);
+
+        font=new JMenu("Font");
+        format.add(font);
+
+        fontArial=new JMenuItem("Arial");
+        fontArial.addActionListener(this);
+        fontArial.setActionCommand("Arial");
+        font.add(fontArial);
+
+        fontCSMS=new JMenuItem("Comic Sans MS");
+        fontCSMS.addActionListener(this);
+        fontCSMS.setActionCommand("Comic Sans MS");
+        font.add(fontCSMS);
+
+        fontTNR=new JMenuItem("Times New Roman");
+        fontTNR.addActionListener(this);
+        fontTNR.setActionCommand("Times New Roman");
+        font.add(fontTNR);
+
+        fontSize=new JMenu("Font Size");
+        format.add(fontSize);
+
+        fontSize8=new JMenuItem("8");
+        fontSize8.addActionListener(this);
+        fontSize8.setActionCommand("8");
+        fontSize.add(fontSize8);
+
+        fontSize12=new JMenuItem("12");
+        fontSize12.addActionListener(this);
+        fontSize12.setActionCommand("12");
+        fontSize.add(fontSize12);
+
+        fontSize16=new JMenuItem("16");
+        fontSize16.addActionListener(this);
+        fontSize16.setActionCommand("16");
+        fontSize.add(fontSize16);
+
+        fontSize18=new JMenuItem("18");
+        fontSize18.addActionListener(this);
+        fontSize18.setActionCommand("18");
+        fontSize.add(fontSize18);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command=e.getActionCommand();
         switch(command){
-            case "New": functionHandler.newFile();break;
-            case "Open": functionHandler.open();break;
-            case "Save": functionHandler.save();break;
-            case "SaveAs": functionHandler.saveAs();break;
-            case "Exit": functionHandler.exit();break;
+            case "New": fileFunctionHandler.newFile();break;
+            case "Open": fileFunctionHandler.open();break;
+            case "Save": fileFunctionHandler.save();break;
+            case "SaveAs": fileFunctionHandler.saveAs();break;
+            case "Exit": fileFunctionHandler.exit();break;
+            case "Word Wrap": formatFunctionHandler.wordWrap();break;
+            case "Arial": formatFunctionHandler.setFont(command);break;
+            case "Comic Sans MS": formatFunctionHandler.setFont(command);break;
+            case "Times New Roman": formatFunctionHandler.setFont(command);break;
+            case "8": formatFunctionHandler.createFont(8);break;
+            case "12": formatFunctionHandler.createFont(12);break;
+            case "16": formatFunctionHandler.createFont(16);break;
+            case "18": formatFunctionHandler.createFont(18);break;
 
         }
     }

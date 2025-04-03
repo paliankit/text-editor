@@ -1,16 +1,15 @@
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-public class FunctionHandler {
+public class FileFunctionHandler {
 
     GUI gui;
     String filename;
     String fileLocation;
 
-    public FunctionHandler(GUI gui){
+    public FileFunctionHandler(GUI gui){
         this.gui=gui;
     }
 
